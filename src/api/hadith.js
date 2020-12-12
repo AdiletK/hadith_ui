@@ -16,7 +16,6 @@ async function getAll(){
   try {
     let url = baseUrl + "findAll";
     let response = await axios.get(url);
-    console.log(response.data)
     return response.data;
   } catch(error){
     console.log(error);
@@ -30,7 +29,7 @@ async function add(item) {
     let response = await axios.post(url, item);
     return response.data;
   } catch (error) {
-    alert(error);
+    console.log(error);
     return null;
   }
 }
@@ -41,8 +40,7 @@ async function update(id, item) {
     let response = await axios.put(url, item);
     return response.data;
   } catch (error) {
-    alert(error);
-    debugger;
+    console.log(error);
     return null;
   }
 }
@@ -52,8 +50,7 @@ async function deleteById(id) {
     let response = await axios.delete(url);
     return response.data;
   } catch (error) {
-    alert(error);
-    debugger;
+    console.log(error);
     return null;
   }
 }

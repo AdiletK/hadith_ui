@@ -16,7 +16,6 @@ async function getAll(){
   try {
     let url = baseUrl + "findAll";
     let response = await axios.get(url);
-    console.log(response.data)
     return response.data;
   } catch(error){
     console.log(error);
@@ -31,7 +30,7 @@ async function add(book) {
     let response = await axios.post(url, book);
     return response.data;
   } catch (error) {
-    alert(error);
+    console.log(error);
     return null;
   }
 }
@@ -52,7 +51,6 @@ async function deleteById(id){
   try {
     let url = baseUrl + "delete/" + id;
     let response = await axios.delete(url);
-    console.log(response);
     return response.data;
   } catch (error) {
     alert(error);

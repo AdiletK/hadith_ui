@@ -1,16 +1,17 @@
 <template>
   <div class="home">
+    <v-card-title>
+      Home page Hadith app
+    </v-card-title>
   </div>
 </template>
 
 <script>
-import Books from '../components/book/books.vue'
 // @ is an alias to /src
 
 export default {
   name: 'Home',
   components: {
-    Books
   }
 }
 </script>
