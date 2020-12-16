@@ -1,7 +1,7 @@
 <template>
-  <div class="home">
+  <v-main>
     <categories/>
-  </div>
+  </v-main>
 </template>
 
 <script>

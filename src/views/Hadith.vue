@@ -1,16 +1,16 @@
 <template>
-  <div class="home">
-    <hadiths/>
-  </div>
+  <v-main>
+    <hadiths />
+  </v-main>
 </template>
 
 <script>
-import Hadiths from '../components/hadith/hadiths.vue'
+import Hadiths from "../components/hadith/hadiths.vue";
 
 export default {
-  name: 'Hadith',
+  name: "Hadith",
   components: {
-    Hadiths
-  }
-}
+    Hadiths,
+  },
+};
 </script>
