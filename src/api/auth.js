@@ -10,7 +10,7 @@ async function login(username, password) {
     });
     let token = response.data.token;
     axios.defaults.headers.common["Authorization"] = "Bearer " + token;
-    window.localStorage.setItem("token", token);
+    window.sessionStorage.setItem("token", token);
 
     return true;
   } catch (error) {
@@ -20,7 +20,7 @@ async function login(username, password) {
  
 function logout() {
     delete axios.defaults.headers.common["Authorization"];
-    window.localStorage.clear();
+    window.sessionStorage.clear();
 }
  
 
