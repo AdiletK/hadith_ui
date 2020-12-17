@@ -1,5 +1,5 @@
 import axios from "axios";
-let baseUrl = "http://localhost:8081/api/category/";
+let baseUrl = "https://hadithtezal.herokuapp.com/api/category/";
 
 async function getById(id) {
   try {
