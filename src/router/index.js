@@ -36,6 +36,18 @@ const routes = [
     component: () => import('../views/Category.vue'),
     meta: { layout: Home }
   },
+  {
+    path: '/language',
+    name: 'Language',
+    component: () => import('../views/Language.vue'),
+    meta: { layout: Home }
+  },
+  {
+    path: '/source',
+    name: 'Source',
+    component: () => import('../views/Source.vue'),
+    meta: { layout: Home }
+  },
 ]
 
 const router = new VueRouter({

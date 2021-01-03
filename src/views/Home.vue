@@ -12,6 +12,14 @@
         <span class="mr-2">Category</span>
         <v-icon>mdi-shape-outline</v-icon>
       </v-btn>
+      <v-btn to="/language" text>
+        <span class="mr-2">Language</span>
+        <v-icon>mdi-shape-outline</v-icon>
+      </v-btn>
+        <v-btn to="/source" text>
+        <span class="mr-2">Source</span>
+        <v-icon>mdi-shape-outline</v-icon>
+      </v-btn>
       <v-spacer></v-spacer>
       <v-btn icon @click="logout">
         <v-icon>mdi-logout</v-icon>

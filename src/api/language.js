@@ -1,20 +1,9 @@
 import axios from "axios";
-let baseUrl = "https://hadithtezal.herokuapp.com/api/book/";
+let baseUrl = "https://hadithtezal.herokuapp.com/api/language/";
 
 async function getById(id) {
   try {
     let url = baseUrl + "findById/" + id;
-    let response = await axios.get(url);
-    return response.data;
-  } catch (error) {
-    console.log(error)
-    return null;
-  }
-}
-
-async function getByLang(id){
-  try {
-    let url = baseUrl + "findByLangId/" + id;
     let response = await axios.get(url);
     return response.data;
   } catch (error) {
@@ -34,11 +23,10 @@ async function getAll(){
   }
 }
 
-async function add(book) {
+async function add(item) {
   try {
-    console.log(book)
     let url = baseUrl + "save";
-    let response = await axios.post(url, book);
+    let response = await axios.post(url, item);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -46,28 +34,25 @@ async function add(book) {
   }
 }
 
-async function update(id, book) {
+async function update(id, item) {
   try {
     let url = baseUrl + "update/" + id;
-    let response = await axios.put(url, book);
+    let response = await axios.put(url, item);
     return response.data;
   } catch (error) {
-    alert(error);
-    console.log(error)
+    console.log(error);
     return null;
   }
 }
-
 async function deleteById(id){
   try {
     let url = baseUrl + "delete/" + id;
     let response = await axios.delete(url);
     return response.data;
   } catch (error) {
-    alert(error);
-    console.log(error)
+    console.log(error);
     return null;
   }
 }
 
-export { getById, getAll, add, update, deleteById, getByLang };
+export { getById, getAll, add, update, deleteById };

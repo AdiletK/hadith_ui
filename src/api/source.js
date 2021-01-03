@@ -1,5 +1,5 @@
 import axios from "axios";
-let baseUrl = "https://hadithtezal.herokuapp.com/api/book/";
+let baseUrl = "https://hadithtezal.herokuapp.com/api/source/";
 
 async function getById(id) {
   try {
@@ -36,7 +36,6 @@ async function getAll(){
 
 async function add(book) {
   try {
-    console.log(book)
     let url = baseUrl + "save";
     let response = await axios.post(url, book);
     return response.data;
@@ -52,20 +51,17 @@ async function update(id, book) {
     let response = await axios.put(url, book);
     return response.data;
   } catch (error) {
-    alert(error);
-    console.log(error)
+    console.log(error);
     return null;
   }
 }
-
 async function deleteById(id){
   try {
     let url = baseUrl + "delete/" + id;
     let response = await axios.delete(url);
     return response.data;
   } catch (error) {
-    alert(error);
-    console.log(error)
+    console.log(error);
     return null;
   }
 }

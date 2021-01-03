@@ -44,6 +44,15 @@
                     :rules="rules"
                     required
                   ></v-textarea>
+                   <v-select
+                    v-model="editedItem.langId"
+                    :items="languages"
+                    :rules="rules"
+                    item-text="title"
+                    item-value="id"
+                    label="Language"
+                    required
+                  ></v-select>
                 </v-form>
               </v-container>
             </v-card-text>
@@ -95,6 +104,7 @@
 
 <script>
 import * as bookApi from "../../api/book";
+import * as languageApi from  "../../api/language";
 export default {
   data: () => ({
     loading: true,
@@ -110,20 +120,24 @@ export default {
       },
       { text: "Author", value: "author" },
       { text: "Title", value: "title" },
+      { text: "Language", value: "langTitle" },
       { text: "Actions", value: "actions", sortable: false },
     ],
     books: [],
+    languages: [],
     editedIndex: -1,
     editedItem: {
       id: "",
       author: "",
       title: "",
       description: "",
+      langId:""
     },
     defaultItem: {
       author: "",
       title: "",
       description: "",
+      langId:""
     },
     rules: [(v) => !!v || "Field is required"],
   }),
@@ -150,6 +164,7 @@ export default {
   methods: {
     async initialize() {
       this.books = await bookApi.getAll() || [];
+      this.languages = await languageApi.getAll() || [];
       this.loading = false
     },
 

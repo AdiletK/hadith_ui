@@ -12,6 +12,17 @@ async function getById(id) {
   }
 }
 
+async function getByLang(id){
+  try {
+    let url = baseUrl + "findByLangId/" + id;
+    let response = await axios.get(url);
+    return response.data;
+  } catch (error) {
+    console.log(error)
+    return null;
+  }
+}
+
 async function getAll(){
   try {
     let url = baseUrl + "findAll";
@@ -55,4 +66,4 @@ async function deleteById(id){
   }
 }
 
-export { getById, getAll, add, update, deleteById };
+export { getById, getAll, add, update, deleteById, getByLang };

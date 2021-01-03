@@ -1,16 +1,15 @@
 <template>
   <v-data-table
     :headers="headers"
-    :items="hadiths"
+    :items="sources"
     sort-by="id"
     class="elevation-1"
-    show-expand
     :loading="loading"
     loading-text="Loading... Please wait"
   >
     <template v-slot:top>
       <v-toolbar flat>
-        <v-toolbar-title>Hadith</v-toolbar-title>
+        <v-toolbar-title>Sources</v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
         <v-spacer></v-spacer>
         <v-dialog v-model="dialog" max-width="500px">
@@ -33,55 +32,14 @@
                     required
                   ></v-text-field>
                   <v-select
-                    v-model="editedItem.status"
-                    :items="statuses"
-                    :rules="rules"
-                    label="Status"
-                    required
-                  ></v-select>
-                  <v-select
                     v-model="editedItem.langId"
                     :items="languages"
                     :rules="rules"
+                    item-text="title"
+                    item-value="id"
                     label="Language"
-                    item-text="title"
-                    item-value="id"
                     required
                   ></v-select>
-                  <v-select
-                    v-model="editedItem.categoryId"
-                    :items="categories"
-                    :rules="rules"
-                    label="Category"
-                    item-text="title"
-                    item-value="id"
-                    required
-                  ></v-select>
-                  <v-select
-                    v-model="editedItem.bookId"
-                    :items="books"
-                    :rules="rules"
-                    label="Book"
-                    item-text="title"
-                    item-value="id"
-                    required
-                  ></v-select>
-                  <v-select
-                    v-model="editedItem.sourcesId"
-                    :items="sources"
-                    :rules="rules"
-                    label="Sources"
-                    item-text="title"
-                    item-value="id"
-                    multiple
-                    required
-                  ></v-select>
-                  <v-textarea
-                    v-model="editedItem.description"
-                    label="Description"
-                    :rules="rules"
-                    required
-                  ></v-textarea>
                 </v-form>
               </v-container>
             </v-card-text>
@@ -125,19 +83,12 @@
     <template v-slot:no-data>
       <v-card-title>No data available</v-card-title>
     </template>
-    <template v-slot:expanded-item="{ headers, item }">
-      <td :colspan="headers.length">{{ item.description }}</td>
-    </template>
   </v-data-table>
 </template>
 
 <script>
-import * as categoryApi from "../../api/category";
-import * as statusApi from "../../api/status";
-import * as hadithApi from "../../api/hadith";
-import * as bookApi from "../../api/book";
-import * as languageApi from "../../api/language";
 import * as sourceApi from "../../api/source";
+import * as languageApi from "../../api/language"
 export default {
   data: () => ({
     loading: true,
@@ -151,38 +102,25 @@ export default {
         sortable: false,
         value: "id",
       },
-      { text: "Title", value: "title" },
-      { text: "Status", value: "status" },
-      { text: "Category", value: "categoryName" },
-      { text: "Book", value: "bookTitle" },
+      {
+        text: "Title",
+        value: "title",
+      },
       { text: "Language", value: "langTitle" },
       { text: "Actions", value: "actions", sortable: false },
     ],
-    hadiths: [],
-    categories: [],
-    statuses: [],
-    books: [],
     sources: [],
     languages: [],
+    statuses: [],
     editedIndex: -1,
     editedItem: {
       id: "",
       title: "",
-      status: "",
-      description: "",
-      categoryId: "",
-      bookId: "",
-      langId: "",
-      sourcesId: [],
+      langId: ""
     },
     defaultItem: {
       title: "",
-      status: "",
-      description: "",
-      categoryId: "",
-      bookId: "",
-      langId: "",
-      sourcesId: [],
+      langId:""
     },
     rules: [(v) => !!v || "Field is required"],
   }),
@@ -200,44 +138,34 @@ export default {
     dialogDelete(val) {
       val || this.closeDelete();
     },
-    async "editedItem.langId"(val) {
-      this.books = (await bookApi.getByLang(val)) || [];
-      this.sources = (await sourceApi.getByLang(val)) || [];
-      this.categories = (await categoryApi.getByLang(val)) || [];
-      this.sources = (await sourceApi.getByLang(val)) || [];
-    },
   },
 
   async created() {
     this.initialize();
-    this.getNeedData();
   },
 
   methods: {
     async initialize() {
-      this.hadiths = (await hadithApi.getAll()) || [];
+      this.sources = (await sourceApi.getAll()) || [];
+      this.languages = await languageApi.getAll() || [];
       this.loading = false;
     },
-    async getNeedData() {
-      this.languages = (await languageApi.getAll()) || [];
-      this.statuses = (await statusApi.getAll()) || [];
-    },
+
     editItem(item) {
-      this.editedIndex = this.hadiths.indexOf(item);
-      console.log(item)
+      this.editedIndex = this.sources.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
 
     deleteItem(item) {
-      this.editedIndex = this.hadiths.indexOf(item);
+      this.editedIndex = this.sources.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialogDelete = true;
     },
 
     deleteItemConfirm() {
-      this.hadiths.splice(this.editedIndex, 1);
-      hadithApi.deleteById(this.editedItem.id);
+      this.sources.splice(this.editedIndex, 1);
+      sourceApi.deleteById(this.editedItem.id);
       this.closeDelete();
     },
 
@@ -260,9 +188,9 @@ export default {
     async save() {
       if (this.$refs.form.validate()) {
         if (this.editedIndex > -1) {
-          await hadithApi.update(this.editedItem.id, this.editedItem);
+          await sourceApi.update(this.editedItem.id, this.editedItem);
         } else {
-          await hadithApi.add(this.editedItem);
+          await sourceApi.add(this.editedItem);
         }
         this.initialize();
 

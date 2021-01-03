@@ -38,6 +38,15 @@
                     label="Status"
                     required
                   ></v-select>
+                  <v-select
+                    v-model="editedItem.langId"
+                    :items="languages"
+                    :rules="rules"
+                    item-text="title"
+                    item-value="id"
+                    label="Language"
+                    required
+                  ></v-select>
                 </v-form>
               </v-container>
             </v-card-text>
@@ -86,7 +95,8 @@
 
 <script>
 import * as categoryApi from "../../api/category";
-import * as statusApi from "../../api/status"
+import * as statusApi from "../../api/status";
+import * as languageApi from "../../api/language"
 export default {
   data: () => ({
     loading: true,
@@ -105,19 +115,23 @@ export default {
         value: "title",
       },
       { text: "Status", value: "status" },
+      { text: "Language", value: "langTitle" },
       { text: "Actions", value: "actions", sortable: false },
     ],
     categories: [],
+    languages: [],
     statuses: [],
     editedIndex: -1,
     editedItem: {
       id: "",
       title: "",
       status: "",
+      langId: ""
     },
     defaultItem: {
       title: "",
       status: "",
+      langId:""
     },
     rules: [(v) => !!v || "Field is required"],
   }),
@@ -143,8 +157,9 @@ export default {
 
   methods: {
     async initialize() {
-      this.categories = await categoryApi.getAll() || [];
-      this.statuses = await statusApi.getAll();
+      this.categories = (await categoryApi.getAll()) || [];
+      this.statuses = await statusApi.getAll() || [];
+      this.languages = await languageApi.getAll() || [];
       this.loading = false;
     },
 
